@@ -5,3 +5,5 @@
 /EmployeesApp/EmployeesApp.Tests/obj
 /EmployeesApp/EmployeesApp.IntegrationTests/obj
 /EmployeesApp/EmployeesApp.IntegrationTests/bin
+/EmployeesApp/EmployeesApp.AutomatedUITests/obj
+/EmployeesApp/EmployeesApp.AutomatedUITests/bin

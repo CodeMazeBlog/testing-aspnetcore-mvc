@@ -1,3 +1,3 @@
-# testing-anti_forgery_token-mvc
-## https://code-maze.com/testing-anti-forgery-token-asp-net-core-mvc/
-This repo contains the source code for the fourth article of the "ASP.NET Core MVC Testing" series on Code Maze
+# automatic-ui-testing-selenium-mvc
+## https://code-maze.com/automatic-ui-testing-selenium-asp-net-core-mvc/
+This repo contains the source code for the fifth article of the "ASP.NET Core MVC Testing" series on Code Maze
