@@ -10,6 +10,7 @@ namespace EmployeesApp.Controllers
     {
         private readonly IEmployeeRepository _repo;
         private readonly AccountNumberValidation _validation;
+
         public EmployeesController(IEmployeeRepository repo)
         {
             _repo = repo;
@@ -31,7 +32,7 @@ namespace EmployeesApp.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create([Bind("Name,AccountNumber,Age")] Employee employee)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return View(employee);
             }
