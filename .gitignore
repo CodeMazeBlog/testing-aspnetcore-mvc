@@ -3,3 +3,5 @@
 /EmployeesApp/EmployeesApp/bin
 /EmployeesApp/EmployeesApp.Tests/bin
 /EmployeesApp/EmployeesApp.Tests/obj
+/EmployeesApp/EmployeesApp.IntegrationTests/obj
+/EmployeesApp/EmployeesApp.IntegrationTests/bin

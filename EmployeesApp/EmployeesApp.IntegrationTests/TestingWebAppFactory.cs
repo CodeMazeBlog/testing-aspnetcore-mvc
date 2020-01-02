@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace EmployeesApp.IntegrationTests
@@ -15,6 +16,15 @@ namespace EmployeesApp.IntegrationTests
         {
             builder.ConfigureServices(services =>
             {
+                var descriptor = services.SingleOrDefault(
+                d => d.ServiceType ==
+                    typeof(DbContextOptions<EmployeeContext>));
+
+                if (descriptor != null)
+                {
+                    services.Remove(descriptor);
+                }
+
                 var serviceProvider = new ServiceCollection()
                 .AddEntityFrameworkInMemoryDatabase()
                 .BuildServiceProvider();
@@ -36,9 +46,7 @@ namespace EmployeesApp.IntegrationTests
                             appContext.Database.EnsureCreated();
                         }
                         catch (Exception ex)
-                        {
-                            //Log errors or do anything you think it's needed
-                            throw;
+                        { //Log errors or do anything you think it's needed throw;
                         }
                     }
                 }

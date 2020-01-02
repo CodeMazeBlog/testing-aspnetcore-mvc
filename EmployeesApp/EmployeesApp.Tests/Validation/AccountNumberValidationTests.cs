@@ -6,17 +6,16 @@ namespace EmployeesApp.Tests.Validation
 {
     public class AccountNumberValidationTests
     {
-        private readonly AccountNumberValidation _validation;
-
-        public AccountNumberValidationTests()
+        private readonly AccountNumberValidation _validation; 
+        public AccountNumberValidationTests() 
         {
-            _validation = new AccountNumberValidation();
+            _validation = new AccountNumberValidation(); 
         }
 
-        [Fact]
-        public void IsValid_ValidAccountNumber_ReturnsTrue()
+        [Fact] 
+        public void IsValid_ValidAccountNumber_ReturnsTrue() 
         {
-            Assert.True(_validation.IsValid("123-4543234576-23"));
+            Assert.True(_validation.IsValid("123-4543234576-23")); 
         }
 
         [Theory]
