@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
+#nullable disable
+
 namespace EmployeesApp.Migrations
 {
     [DbContext(typeof(EmployeeContext))]
@@ -15,22 +17,27 @@ namespace EmployeesApp.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.2-servicing-10034")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "6.0.0-rc.2.21480.5")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
             modelBuilder.Entity("EmployeesApp.Models.Employee", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("AccountNumber")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Age");
+                    b.Property<int>("Age")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -39,14 +46,14 @@ namespace EmployeesApp.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("8f000503-4a87-48a2-889d-185e36284023"),
+                            Id = new Guid("07e57250-5443-4bdc-be13-59239ada918e"),
                             AccountNumber = "123-3452134543-32",
                             Age = 30,
                             Name = "Mark"
                         },
                         new
                         {
-                            Id = new Guid("72de4796-2c13-4e50-a1b7-fd44274abfda"),
+                            Id = new Guid("195430d1-9227-451e-8378-65df427be580"),
                             AccountNumber = "123-9384613085-55",
                             Age = 28,
                             Name = "Evelin"

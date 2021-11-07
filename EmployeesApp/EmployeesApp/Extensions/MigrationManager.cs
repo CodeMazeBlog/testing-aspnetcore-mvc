@@ -9,9 +9,9 @@ namespace EmployeesApp.Extensions
 {
     public static class MigrationManager
     {
-        public static IHost MigrateDatabase(this IHost webHost)
+        public static WebApplication MigrateDatabase(this WebApplication webApp)
         {
-            using (var scope = webHost.Services.CreateScope())
+            using (var scope = webApp.Services.CreateScope())
             {
                 using (var appContext = scope.ServiceProvider.GetRequiredService<EmployeeContext>())
                 {
@@ -27,7 +27,7 @@ namespace EmployeesApp.Extensions
                 }
             }
 
-            return webHost;
+            return webApp;
         }
     }
 }
