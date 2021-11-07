@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -6,80 +5,82 @@ using Xunit;
 
 namespace EmployeesApp.IntegrationTests
 {
-    public class EmployeesControllerIntegrationTests : IClassFixture<TestingWebAppFactory<Startup>> 
-    { 
-        private readonly HttpClient _client; 
-        public EmployeesControllerIntegrationTests(TestingWebAppFactory<Startup> factory) 
-        {
-            _client = factory.CreateClient(); 
-        }
+	public class EmployeesControllerIntegrationTests : IClassFixture<TestingWebAppFactory<Program>>
+	{
+		private readonly HttpClient _client;
 
-        [Fact] public async Task Index_WhenCalled_ReturnsApplicationForm() 
-        { 
-            var response = await _client.GetAsync("/Employees"); 
+		public EmployeesControllerIntegrationTests(TestingWebAppFactory<Program> factory) 
+			=> _client = factory.CreateClient();
 
-            response.EnsureSuccessStatusCode(); 
+		[Fact]
+		public async Task Index_WhenCalled_ReturnsApplicationForm()
+		{
+			var response = await _client.GetAsync("/Employees");
 
-            var responseString = await response.Content.ReadAsStringAsync(); 
+			response.EnsureSuccessStatusCode();
 
-            Assert.Contains("Mark", responseString);
-            Assert.Contains("Evelin", responseString); 
-        }
+			var responseString = await response.Content.ReadAsStringAsync();
 
-        [Fact]
-        public async Task Create_WhenCalled_ReturnsCreateForm()
-        {
-            var response = await _client.GetAsync("/Employees/Create");
+			Assert.Contains("Mark", responseString);
+			Assert.Contains("Evelin", responseString);
+		}
 
-            response.EnsureSuccessStatusCode();
+		[Fact]
+		public async Task Create_WhenCalled_ReturnsCreateForm()
+		{
+			var response = await _client.GetAsync("/Employees/Create");
 
-            var responseString = await response.Content.ReadAsStringAsync();
+			response.EnsureSuccessStatusCode();
 
-            Assert.Contains("Please provide a new employee data", responseString);
-        }
+			var responseString = await response.Content.ReadAsStringAsync();
 
-        [Fact]
-        public async Task Create_SentWrongModel_ReturnsViewWithErrorMessages()
-        {
-            var postRequest = new HttpRequestMessage(HttpMethod.Post, "/Employees/Create");
+			Assert.Contains("Please provide a new employee data", responseString);
+		}
 
-            var formModel = new Dictionary<string, string>
-            {
-                { "Name", "New Employee" },
-                { "Age", "25" }
-            };
+		[Fact]
+		public async Task Create_SentWrongModel_ReturnsViewWithErrorMessages()
+		{
+			var postRequest = new HttpRequestMessage(HttpMethod.Post, "/Employees/Create");
 
-            postRequest.Content = new FormUrlEncodedContent(formModel);
+			var formModel = new Dictionary<string, string>
+			{
+				{ "Name", "New Employee" },
+				{ "Age", "25" }
+			};
 
-            var response = await _client.SendAsync(postRequest);
-            response.EnsureSuccessStatusCode();
+			postRequest.Content = new FormUrlEncodedContent(formModel);
+			
+			var response = await _client.SendAsync(postRequest);
+			
+			response.EnsureSuccessStatusCode();
+			
+			var responseString = await response.Content.ReadAsStringAsync();
+			
+			Assert.Contains("Account number is required", responseString);
+		}
 
-            var responseString = await response.Content.ReadAsStringAsync();
-
-            Assert.Contains("Account number is required", responseString);
-        }
-
-        [Fact]
-        public async Task Create_WhenPOSTExecuted_ReturnsToIndexViewWithCreatedEmployee()
-        {
-            var postRequest = new HttpRequestMessage(HttpMethod.Post, "/Employees/Create");
-
-            var formModel = new Dictionary<string, string>
-            {
-                { "Name", "New Employee" },
-                { "Age", "25" },
-                { "AccountNumber", "214-5874986532-21" }
-            };
-
-            postRequest.Content = new FormUrlEncodedContent(formModel);
-
-            var response = await _client.SendAsync(postRequest);
-            response.EnsureSuccessStatusCode();
-
-            var responseString = await response.Content.ReadAsStringAsync();
-
-            Assert.Contains("New Employee", responseString);
-            Assert.Contains("214-5874986532-21", responseString);
-        }
-    }
+		[Fact] 
+		public async Task Create_WhenPOSTExecuted_ReturnsToIndexViewWithCreatedEmployee() 
+		{ 
+			var postRequest = new HttpRequestMessage(HttpMethod.Post, "/Employees/Create"); 
+			
+			var formModel = new Dictionary<string, string> 
+			{ 
+				{ "Name", "New Employee" }, 
+				{ "Age", "25" }, 
+				{ "AccountNumber", "214-5874986532-21" } 
+			}; 
+			
+			postRequest.Content = new FormUrlEncodedContent(formModel); 
+			
+			var response = await _client.SendAsync(postRequest); 
+			
+			response.EnsureSuccessStatusCode(); 
+			
+			var responseString = await response.Content.ReadAsStringAsync(); 
+			
+			Assert.Contains("New Employee", responseString); 
+			Assert.Contains("214-5874986532-21", responseString); 
+		}
+	}
 }
